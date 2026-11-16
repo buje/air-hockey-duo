@@ -1,0 +1,10 @@
+{
+  "name": "Air Hockey Duo",
+  "short_name": "Air Hockey",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#05070f",
+  "theme_color": "#05070f"
+}

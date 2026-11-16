@@ -1,0 +1,118 @@
+:root {
+  --c0: #1accff;
+  --c1: #ff2985;
+  --net: #80ffb8;
+  --bg: #05070f;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: #eaf2ff;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+body { position: fixed; inset: 0; }
+#gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+[hidden] { display: none !important; }
+
+/* Sert uniquement à lire les zones sûres de l'écran depuis le JS. */
+#safe-probe {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+}
+
+#hud { position: absolute; inset: 0; pointer-events: none; }
+.score {
+  position: absolute;
+  font-size: 22vmin;
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0.2;
+  font-variant-numeric: tabular-nums;
+  transition: opacity 0.3s;
+  will-change: transform;
+}
+.score.p0 { color: var(--c0); }
+.score.p1 { color: var(--c1); }
+.score.pop { opacity: 0.85; }
+#btn-pause {
+  position: absolute;
+  pointer-events: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(128, 255, 184, 0.5);
+  background: rgba(5, 7, 15, 0.7);
+  color: var(--net);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 0;
+  transform: translate(-50%, -50%);
+}
+
+.panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(86vw, 460px);
+  max-height: 92vh;
+  padding: 26px 24px 20px;
+  border-radius: 26px;
+  background: rgba(8, 11, 24, 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 60px rgba(26, 204, 255, 0.18), 0 0 120px rgba(255, 41, 133, 0.12);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: rise 0.35s ease-out;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+h1, h2 { margin: 0; font-weight: 800; letter-spacing: 0.08em; }
+h1 { font-size: clamp(24px, 6vmin, 38px); text-shadow: 0 0 18px rgba(26, 204, 255, 0.7); }
+h1 span { color: var(--c1); text-shadow: 0 0 18px rgba(255, 41, 133, 0.8); }
+h2 { font-size: clamp(22px, 5vmin, 32px); }
+p { margin: 0; }
+.tag { color: var(--net); letter-spacing: 0.25em; text-transform: uppercase; font-size: 12px; margin-bottom: 6px; }
+.big { font-size: clamp(18px, 4.5vmin, 26px); font-weight: 600; }
+.hint { font-size: 13px; opacity: 0.65; }
+.diag { font-size: 10px; opacity: 0.4; font-variant-numeric: tabular-nums; }
+.row { display: flex; gap: 8px; }
+.row button { flex: 1; padding: 12px 4px; font-size: 13px; }
+button {
+  font: inherit;
+  font-weight: 700;
+  color: #eaf2ff;
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  touch-action: manipulation;
+  cursor: pointer;
+}
+button:active { transform: scale(0.97); background: rgba(255, 255, 255, 0.14); }
+button.primary {
+  font-size: 18px;
+  border: none;
+  color: #04121a;
+  background: linear-gradient(90deg, var(--c0), var(--net));
+  box-shadow: 0 0 24px rgba(26, 204, 255, 0.55);
+}
+button.link { border: none; background: none; font-weight: 500; font-size: 13px; opacity: 0.6; text-decoration: underline; }
+#btn-pause:active { transform: translate(-50%, -50%) scale(0.92); }

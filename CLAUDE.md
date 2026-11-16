@@ -1,0 +1,28 @@
+# Air Hockey Duo
+
+Air hockey web pour iPhone Duo ouvert à plat : le pli de l'écran est le filet. Projet de Thomas (GitHub `buje`), maintenu par Claude.
+
+- En ligne : https://buje.github.io/air-hockey-duo/ (GitHub Pages, branche `main`, racine)
+- Conception : `docs/superpowers/specs/2026-11-16-air-hockey-duo-design.md`
+- Plan et avancement : `docs/superpowers/plans/2026-11-16-air-hockey-duo.md`
+
+## Règles du dépôt
+
+- Zéro dépendance, zéro build. JavaScript en modules ES, WebGL2 sans bibliothèque.
+- `src/physics.js`, `src/game.js`, `src/ai.js`, `src/display.js` sont purs : ni DOM ni WebGL. Tout changement y est couvert par un test.
+- `src/renderer.js` lit l'état du jeu et ne le modifie jamais.
+- Tous les réglages de jeu sont dans `src/config.js`.
+- Aucune dimension d'appareil en dur. Le filet reste au centre de l'écran.
+- Textes en français. Pas de tiret cadratin, pas de virgule avant « et ».
+
+## Avant chaque mise en ligne
+
+1. Mettre à jour la date dans `src/version.js` (heure de La Réunion).
+2. `npm test` puis `npm run smoke` : tout doit passer.
+3. Pousser sur `main`. Thomas teste sur son iPhone Duo, le jeu ne se valide pas en local.
+4. Vérifier la page en ligne : `python3 tests/smoke.py https://buje.github.io/air-hockey-duo/`.
+
+## À savoir
+
+- Safari n'expose le pli que derrière des feature flags : le jeu déduit fermé ou ouvert de la taille de fenêtre (`classify` dans `display.js`).
+- Le ressenti (tactile, gestes système, chauffe, fluidité) ne se juge que sur l'appareil de Thomas. Lui demander ses retours plutôt que deviner.

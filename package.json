@@ -1,0 +1,9 @@
+{
+  "name": "air-hockey-duo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "smoke": "python3 tests/smoke.py"
+  }
+}
