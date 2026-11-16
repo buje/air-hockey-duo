@@ -9,7 +9,7 @@ export function attachInput(el, ctx) {
 
   function playerFor(t) {
     const g = ctx.game;
-    if (g.mode === 'solo') return 0; // en solo tout l'écran pilote le maillet du joueur
+    if (g.mode === 'solo' || g.mode === 'net') return 0; // tout l'écran pilote le maillet du joueur
     return t.x < g.world.W / 2 ? 0 : 1;
   }
 
@@ -36,7 +36,7 @@ export function attachInput(el, ctx) {
   el.addEventListener('pointermove', (e) => {
     if (owners.has(e.pointerId)) {
       aim(owners.get(e.pointerId), e);
-    } else if (e.pointerType === 'mouse' && ctx.game.mode === 'solo' && ctx.game.state === 'playing') {
+    } else if (e.pointerType === 'mouse' && (ctx.game.mode === 'solo' || ctx.game.mode === 'net') && ctx.game.state !== 'over') {
       aim(0, e); // à la souris, le maillet suit le curseur sans cliquer
     }
   });
@@ -58,7 +58,7 @@ export function attachInput(el, ctx) {
   const stop = (e) => e.preventDefault();
   for (const type of ['touchstart', 'touchmove', 'gesturestart', 'gesturechange', 'dblclick', 'contextmenu']) {
     document.addEventListener(type, (e) => {
-      if (e.target.closest && e.target.closest('button, a')) return;
+      if (e.target.closest && e.target.closest('button, a, input')) return;
       stop(e);
     }, { passive: false });
   }

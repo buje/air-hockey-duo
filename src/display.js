@@ -17,7 +17,8 @@ export function classify(vw, vh) {
 
 // insets = { top, right, bottom, left } zones sûres en px CSS.
 // La table est toujours centrée sur l'écran : le filet tombe sur le pli.
-export function computeLayout(vw, vh, insets = { top: 0, right: 0, bottom: 0, left: 0 }) {
+// forcedAspect : forme de table imposée (parties à distance, la même sur les deux téléphones).
+export function computeLayout(vw, vh, insets = { top: 0, right: 0, bottom: 0, left: 0 }, forcedAspect = 0) {
   const padX = Math.max(insets.left, insets.right) + MARGIN;
   const padY = Math.max(insets.top, insets.bottom) + MARGIN;
   const availW = Math.max(50, vw - 2 * padX);
@@ -31,6 +32,10 @@ export function computeLayout(vw, vh, insets = { top: 0, right: 0, bottom: 0, le
   if (aspect < MIN_ASPECT) {
     aspect = MIN_ASPECT;
     scale = long / aspect;
+  }
+  if (forcedAspect > 0) {
+    aspect = forcedAspect;
+    scale = Math.min(short, long / aspect);
   }
   const tableLong = aspect * scale;
   const tableShort = scale;

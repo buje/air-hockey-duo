@@ -21,6 +21,7 @@
     <div class="score p0" id="score0">0</div>
     <div class="score p1" id="score1">0</div>
     <button id="btn-pause" aria-label="Pause">II</button>
+    <div id="net-lag" hidden>Adversaire absent…</div>
   </div>
 
   <section class="panel" id="panel-cover" hidden>
@@ -38,12 +39,31 @@
       <button data-mode="solo" data-level="1">Solo moyen</button>
       <button data-mode="solo" data-level="2">Solo difficile</button>
     </div>
+    <button id="btn-net">Jouer à distance</button>
     <div class="row">
       <button class="link" id="btn-sound">Son activé</button>
       <button class="link" id="btn-soundtest">Tester le son</button>
     </div>
     <p class="hint">Téléphone ouvert à plat, un joueur de chaque côté. Premier à 7.</p>
     <p class="diag" id="diag"></p>
+  </section>
+
+  <section class="panel" id="panel-net" hidden>
+    <h2>Jouer à distance</h2>
+    <div id="net-choice" class="stack">
+      <button class="primary" id="btn-host">Créer une partie</button>
+      <div class="row">
+        <input id="net-code" maxlength="4" placeholder="CODE" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Code de la partie">
+        <button id="btn-join">Rejoindre</button>
+      </div>
+    </div>
+    <div id="net-wait" class="stack" hidden>
+      <p class="hint">Code de la partie</p>
+      <p class="code" id="net-code-show"></p>
+      <button class="primary" id="btn-share">Envoyer le lien</button>
+    </div>
+    <p class="hint" id="net-status"></p>
+    <button id="btn-net-cancel">Retour</button>
   </section>
 
   <section class="panel" id="panel-pause" hidden>

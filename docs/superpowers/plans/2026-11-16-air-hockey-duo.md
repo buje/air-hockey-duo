@@ -27,6 +27,7 @@
 - [x] **1. Duel jouable.** `config`, `physics`, `game`, `display`, `input`, `renderer`, `shaders`, `main`, page et styles. Tests Node et test de fumée Chrome. Mise en ligne sur GitHub Pages.
 - [x] **2. Solo et écrans.** IA à 3 niveaux (`ai`), écran fermé, menu avec démo en fond, pause, fin de partie. Avancé pendant l'étape 1.
 - [x] **3a. Sons.** Sons synthétisés (`audio`), bouton pour couper le son, vibration là où le navigateur le permet (`haptics`).
+- [x] **3c. Jeu à distance.** Deux téléphones, sans compte : code à 4 lettres ou lien d'invitation. `netgame` (protocole) et `net` (PeerJS). Tests : matchs simulés avec retard réseau, deux navigateurs sans écran.
 - [ ] **3b. Passe waouh.** Bloom en plusieurs passes, reflets sur la table, ralenti sur les buts, allumage de la table à l'ouverture.
 - [ ] **4. Finitions.** Service worker hors ligne, icônes d'écran d'accueil, qualité automatique selon la fluidité, réglages après essais sur le Duo (marges, tailles, vitesses, IA).
 

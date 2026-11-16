@@ -6,6 +6,7 @@ Un air hockey pensé pour l'iPhone Duo. Ouvre le téléphone, pose-le à plat su
 
 - Duel à deux, un joueur de chaque côté, premier à 7.
 - Solo contre une IA, trois niveaux.
+- À distance contre un ami sur un autre téléphone : un code à 4 lettres ou un lien, sans compte.
 - Fonctionne aussi sur un autre téléphone, une tablette ou un ordinateur.
 
 Pour le plein écran sur iPhone : Partager, puis « Sur l'écran d'accueil ».

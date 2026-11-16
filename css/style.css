@@ -116,3 +116,47 @@ button.primary {
 }
 button.link { border: none; background: none; font-weight: 500; font-size: 13px; opacity: 0.6; text-decoration: underline; }
 #btn-pause:active { transform: translate(-50%, -50%) scale(0.92); }
+
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.code {
+  font-size: clamp(40px, 12vmin, 64px);
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  margin-right: -0.3em;
+  color: var(--net);
+  text-shadow: 0 0 22px rgba(128, 255, 184, 0.7);
+  -webkit-user-select: text;
+  user-select: text;
+}
+input {
+  flex: 1.4;
+  min-width: 0;
+  font: inherit;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #eaf2ff;
+  padding: 12px 8px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.35);
+  -webkit-user-select: text;
+  user-select: text;
+  touch-action: manipulation;
+}
+input:focus { outline: none; border-color: var(--net); box-shadow: 0 0 16px rgba(128, 255, 184, 0.4); }
+
+#net-lag {
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(8, 11, 24, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 13px;
+  font-weight: 600;
+}

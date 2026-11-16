@@ -10,7 +10,8 @@ export function createGame(aspect, cfg = CONFIG) {
     world: createWorld(aspect, cfg),
     state: 'menu',
     resumeState: 'playing',
-    mode: 'duel', // 'duel' | 'solo' | 'demo' (IA contre IA)
+    mode: 'duel', // 'duel' | 'solo' | 'demo' (IA contre IA) | 'net' (à distance, voir netgame.js)
+    net: null,
     level: 1,
     scores: [0, 0],
     winner: -1,
@@ -70,7 +71,7 @@ export function resume(game) {
 // Le joueur `i` vise le point (x, y). Ignoré pour un maillet piloté par l'IA.
 export function setPlayerTarget(game, i, x, y) {
   if (game.mode === 'demo') return;
-  if (game.mode === 'solo' && i === 1) return;
+  if ((game.mode === 'solo' || game.mode === 'net') && i === 1) return;
   setTarget(game.world, i, x, y);
 }
 
@@ -101,6 +102,15 @@ function fixedStep(game, dt) {
   }
   const before = ev.length;
   stepWorld(w, dt, ev);
+
+  // À distance, seul le téléphone qui a la main sur le palet décide des buts et des remises
+  // en jeu. L'autre ne fait qu'anticiper l'image en attendant les nouvelles (voir netgame.js).
+  if (game.mode === 'net' && !game.net.owner) {
+    for (let k = ev.length - 1; k >= before; k--) {
+      if (ev[k].type === 'goal') ev.splice(k, 1);
+    }
+    return;
+  }
 
   if (game.state === 'playing') {
     for (let k = before; k < ev.length; k++) {
