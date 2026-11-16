@@ -1,7 +1,7 @@
 // Règles et déroulé d'une partie. Pur : ne connaît ni l'écran ni WebGL.
 import { CONFIG } from './config.js';
 import { createWorld, stepWorld, setTarget, placePuck } from './physics.js';
-import { aiTarget } from './ai.js';
+import { aiTarget, createAiState } from './ai.js';
 
 // États : 'menu' | 'playing' | 'goal' | 'over' | 'paused'
 export function createGame(aspect, cfg = CONFIG) {
@@ -18,6 +18,7 @@ export function createGame(aspect, cfg = CONFIG) {
     acc: 0,
     stuck: 0,
     lastConceder: 0,
+    ai: [createAiState(), createAiState()],
     events: [],
   };
 }
@@ -35,6 +36,7 @@ export function startMatch(game, mode, level = 1) {
   game.scores = [0, 0];
   game.winner = -1;
   game.acc = 0;
+  game.ai = [createAiState(), createAiState()];
   const { W } = game.world;
   for (let i = 0; i < 2; i++) {
     const m = game.world.mallets[i];
@@ -90,11 +92,11 @@ function fixedStep(game, dt) {
   const w = game.world;
   const ev = game.events;
   if (game.mode === 'solo' || game.mode === 'demo') {
-    const t = aiTarget(w, 1, game.level, dt);
+    const t = aiTarget(w, 1, game.level, dt, game.ai[1]);
     setTarget(w, 1, t.x, t.y);
   }
   if (game.mode === 'demo') {
-    const t = aiTarget(w, 0, game.level, dt);
+    const t = aiTarget(w, 0, game.level, dt, game.ai[0]);
     setTarget(w, 0, t.x, t.y);
   }
   const before = ev.length;

@@ -105,7 +105,7 @@ function placeHud() {
 function updateDiag() {
   const posture = navigator.devicePosture?.type ?? 'n/d';
   $('diag').textContent =
-    `Mis à jour le ${BUILD} · ${layout.vw}×${layout.vh} @${window.devicePixelRatio}x · ${layout.mode} · posture ${posture} · vibration ${hapticsSupported ? 'oui' : 'non'}`;
+    `Mis à jour le ${BUILD} · ${layout.vw}×${layout.vh} @${window.devicePixelRatio}x · ${layout.mode} · posture ${posture} · vibration ${hapticsSupported ? 'oui' : 'non'} · audio ${sound.audioState()}`;
 }
 
 function onResize() {
@@ -160,8 +160,8 @@ panels.menu.addEventListener('click', (e) => {
   if (btn) beginMatch(btn.dataset.mode, Number(btn.dataset.level ?? 1));
 });
 // Le son ne peut démarrer qu'après un geste : on le débloque au premier toucher.
-for (const type of ['pointerdown', 'click', 'touchend']) {
-  document.addEventListener(type, () => sound.unlock(), { capture: true });
+for (const type of ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'mousedown', 'click', 'keydown']) {
+  document.addEventListener(type, () => sound.unlock(), { capture: true, passive: true });
 }
 document.addEventListener('click', (e) => {
   if (e.target.closest('button')) sound.play({ type: 'ui' }, 1);
@@ -174,6 +174,17 @@ $('btn-sound').addEventListener('click', () => {
   updateSoundButton();
 });
 updateSoundButton();
+// Bouton de test : joue le son du but et affiche l'état du moteur audio.
+$('btn-soundtest').addEventListener('click', () => {
+  sound.unlock();
+  setTimeout(() => {
+    sound.play({ type: 'score', scorer: 0 }, 1);
+    updateDiag();
+  }, 60);
+});
+setInterval(() => {
+  if (!panels.menu.hidden) updateDiag();
+}, 1000);
 $('btn-bypass').addEventListener('click', () => {
   coverBypass = true;
   goMenu();
@@ -251,4 +262,4 @@ if (!renderer) {
 }
 
 // Accès pour les tests automatiques et le diagnostic depuis la console.
-window.__airhockey = { game, getLayout: () => layout, beginMatch, audioState: sound.audioState };
+window.__airhockey = { game, getLayout: () => layout, beginMatch, sound };

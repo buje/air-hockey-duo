@@ -38,7 +38,19 @@ with sync_playwright() as p:
     # Duel : deux doigts, un par camp.
     page.click("button[data-mode=duel]")
     page.wait_for_timeout(300)
-    assert page.evaluate("() => __airhockey.audioState()") == "running", "le son doit démarrer au premier geste"
+    assert page.evaluate("() => __airhockey.sound.audioState()") == "running", "le son doit démarrer au premier geste"
+    # Le signal part vraiment vers les haut-parleurs : on mesure son niveau pendant un son de but.
+    # (attente active : le fil audio tourne à part, la mesure ne dépend pas de la fluidité de la page)
+    level = page.evaluate("""() => {
+      const s = __airhockey.sound; let max = 0;
+      for (let i = 0; i < 8; i++) {
+        s.play({type: 'score', scorer: 0}, 1);
+        const end = performance.now() + 45; while (performance.now() < end) {}
+        max = Math.max(max, s.peak());
+      }
+      return max;
+    }""")
+    assert level > 0.05, f"aucun signal audio mesuré ({level})"
     page.evaluate("""() => {
       const c = document.getElementById('gl');
       const ev = (type, id, x, y) => c.dispatchEvent(new PointerEvent(type, {pointerId: id, clientX: x, clientY: y, pointerType: 'touch', bubbles: true}));

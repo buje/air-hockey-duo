@@ -1,8 +1,13 @@
 // Adversaire du mode solo. Pur : lit le monde et renvoie une cible pour son maillet.
 import { malletBounds } from './physics.js';
 
-// `i` = joueur piloté, `level` = 0 facile, 1 moyen, 2 difficile.
-export function aiTarget(world, i, level, dt) {
+// Mémoire de l'IA d'une image à l'autre.
+export function createAiState() {
+  return { near: 0, inHalf: 0, retreat: 0 };
+}
+
+// `i` = joueur piloté, `level` = 0 facile, 1 moyen, 2 difficile, `st` = createAiState().
+export function aiTarget(world, i, level, dt, st) {
   const { W, cfg, puck: p } = world;
   const m = world.mallets[i];
   const b = malletBounds(world, i);
@@ -11,9 +16,25 @@ export function aiTarget(world, i, level, dt) {
   const inMyHalf = world.puckActive && (i === 0 ? p.x < W / 2 : p.x > W / 2);
   const comingAtMe = world.puckActive && p.vx * dir < -0.2;
 
+  // Anti-blocage. Un palet coincé entre le maillet et un bord ne peut pas ressortir tant que
+  // le maillet reste collé à lui : l'IA frappe puis recule pour le laisser rebondir.
+  const dist = Math.hypot(p.x - m.x, p.y - m.y);
+  st.near = world.puckActive && dist < p.r + m.r + 0.06 ? st.near + dt : 0;
+  st.inHalf = inMyHalf ? st.inHalf + dt : 0;
+  if (st.retreat <= 0 && (st.near > 0.35 || st.inHalf > 4)) {
+    st.retreat = st.inHalf > 4 ? 0.9 : 0.55;
+    st.near = 0;
+    st.inHalf = Math.min(st.inHalf, 2);
+  }
+
   let tx = homeX;
   let ty = 0.5;
-  if (inMyHalf) {
+  if (st.retreat > 0) {
+    // Recul : revenir devant son but, du côté opposé au palet.
+    st.retreat -= dt;
+    tx = homeX;
+    ty = 0.5 - Math.sign(p.y - 0.5 || 1) * 0.18;
+  } else if (inMyHalf) {
     const behind = (m.x - p.x) * dir < -0.03; // le maillet est côté but par rapport au palet
     const tooFast = Math.hypot(p.vx, p.vy) > 2.2 && comingAtMe;
     if (tooFast) {
@@ -65,10 +86,10 @@ export function aiTarget(world, i, level, dt) {
   const maxMove = cfg.aiSpeed[level] * dt;
   const dx = tx - m.x;
   const dy = ty - m.y;
-  const dist = Math.hypot(dx, dy);
-  if (dist > maxMove) {
-    tx = m.x + (dx / dist) * maxMove;
-    ty = m.y + (dy / dist) * maxMove;
+  const move = Math.hypot(dx, dy);
+  if (move > maxMove) {
+    tx = m.x + (dx / move) * maxMove;
+    ty = m.y + (dy / move) * maxMove;
   }
   return { x: tx, y: ty };
 }
