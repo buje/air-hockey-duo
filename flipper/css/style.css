@@ -1,0 +1,28 @@
+#stage { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+#hud { position: absolute; inset: 0; pointer-events: none; font-variant-numeric: tabular-nums; }
+#hud .corner { position: absolute; font-weight: 800; line-height: 1.1; text-shadow: 0 0 12px rgba(26, 204, 255, 0.6); }
+#hud small { display: block; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; opacity: 0.6; }
+#hud-score { font-size: clamp(18px, 5vmin, 30px); }
+#hud-right { text-align: right; font-size: clamp(14px, 3.6vmin, 22px); }
+#hud-balls { color: #fff3d6; letter-spacing: 0.15em; }
+#hud-mult { color: var(--net); }
+#toast {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  transform: translate(-50%, -50%);
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(8, 11, 24, 0.8);
+  border: 1px solid rgba(128, 255, 184, 0.5);
+  color: var(--net);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+#toast.show { opacity: 1; }
+#btn-pause { pointer-events: auto; }
+.fold-picture { font-size: 64px; line-height: 1; margin: 4px 0; filter: drop-shadow(0 0 14px rgba(128, 255, 184, 0.6)); }
+.fold-picture svg { width: 96px; height: 96px; }

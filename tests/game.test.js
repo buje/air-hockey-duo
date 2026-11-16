@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { CONFIG } from '../src/config.js';
-import { createGame, startMatch, update, pause, resume, setPlayerTarget, setAspect } from '../src/game.js';
+import { CONFIG } from '../air-hockey/src/config.js';
+import { createGame, startMatch, update, pause, resume, setPlayerTarget, setAspect } from '../air-hockey/src/game.js';
 
 const A = 1.42;
 

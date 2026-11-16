@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { CONFIG } from '../src/config.js';
-import { createWorld, stepWorld, setTarget, placePuck, malletBounds } from '../src/physics.js';
+import { CONFIG } from '../air-hockey/src/config.js';
+import { createWorld, stepWorld, setTarget, placePuck, malletBounds } from '../air-hockey/src/physics.js';
 
 const A = 1.42;
 const H = CONFIG.step;

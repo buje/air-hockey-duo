@@ -1,7 +1,7 @@
 """Test de fumée : charge le jeu dans Chrome sans écran, vérifie que WebGL démarre,
 qu'aucune erreur ne sort en console et qu'une partie se joue. Produit des captures dans /tmp/ah.
 
-Usage : python3 tests/smoke.py [url]   (sans url : sert le dossier courant en local)
+Usage : python3 tests/smoke.py [url du jeu]   (sans url : sert le dépôt en local et teste air-hockey/)
 """
 import http.server, os, socketserver, sys, threading
 from playwright.sync_api import sync_playwright
@@ -18,7 +18,7 @@ if not url:
     socketserver.TCPServer.allow_reuse_address = True
     srv = socketserver.TCPServer(("127.0.0.1", 0), H)
     threading.Thread(target=srv.serve_forever, daemon=True).start()
-    url = f"http://127.0.0.1:{srv.server_address[1]}/"
+    url = f"http://127.0.0.1:{srv.server_address[1]}/air-hockey/"
 
 errors = []
 with sync_playwright() as p:

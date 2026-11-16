@@ -1,8 +1,16 @@
-# Air Hockey Duo
+# Jeux pour iPhone Duo
 
-Un air hockey pensé pour l'iPhone Duo. Ouvre le téléphone, pose-le à plat sur la table : le pli de l'écran est le filet.
+Deux jeux web pensés pour l'écran pliable de l'iPhone Duo.
 
 **Jouer :** https://buje.github.io/air-hockey-duo/
+
+## Flipper plié
+
+Plie le téléphone comme un ordinateur portable. La moitié du haut est un mur où la bille tombe vite, la moitié du bas est le plateau sous tes pouces.
+
+## Air Hockey Duo
+
+Ouvre le téléphone, pose-le à plat sur la table : le pli de l'écran est le filet.
 
 - Duel à deux, un joueur de chaque côté, premier à 7.
 - Solo contre une IA, trois niveaux.
@@ -17,5 +25,6 @@ Aucune dépendance et aucune étape de build. Servir le dossier avec n'importe q
 
 ```
 npm test        # physique, règles, géométrie
-npm run smoke   # test dans Chrome sans écran
+npm run smoke   # air hockey dans Chrome sans écran
+python3 tests/flipper-smoke.py   # flipper et page d'accueil
 ```

@@ -1,7 +1,7 @@
 // Mesure combien de temps le palet reste dans le camp de l'IA en mode solo,
 // avec un joueur humain simulé (immobile, ou qui renvoie le palet au hasard).
 // Usage : node tests/stuck-sim.mjs
-import { createGame, startMatch, update, setPlayerTarget } from '../src/game.js';
+import { createGame, startMatch, update, setPlayerTarget } from '../air-hockey/src/game.js';
 
 export function simulate(level, human, seconds = 240, seed = 1) {
   let s = seed;

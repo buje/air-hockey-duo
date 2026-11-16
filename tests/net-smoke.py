@@ -18,7 +18,7 @@ class H(http.server.SimpleHTTPRequestHandler):
 socketserver.TCPServer.allow_reuse_address = True
 srv = socketserver.TCPServer(("127.0.0.1", 0), H)
 threading.Thread(target=srv.serve_forever, daemon=True).start()
-base = f"http://127.0.0.1:{srv.server_address[1]}/"
+base = f"http://127.0.0.1:{srv.server_address[1]}/air-hockey/"
 if len(sys.argv) > 1:
     base, q, peer = sys.argv[1], "live=1", None
 else:

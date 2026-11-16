@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Air Hockey Duo">
+  <meta name="theme-color" content="#05070f">
+  <title>Air Hockey Duo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2305070f'/%3E%3Cpath d='M16 3v26' stroke='%2380ffb8' stroke-width='2'/%3E%3Ccircle cx='9' cy='16' r='4' fill='%231accff'/%3E%3Ccircle cx='23' cy='16' r='4' fill='%23ff2985'/%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="../shared/ui.css">
+</head>
+<body>
+  <canvas id="gl"></canvas>
+  <div id="safe-probe"></div>
+
+  <div id="hud" hidden>
+    <div class="score p0" id="score0">0</div>
+    <div class="score p1" id="score1">0</div>
+    <button id="btn-pause" aria-label="Pause">II</button>
+    <div id="net-lag" hidden>Adversaire absent…</div>
+  </div>
+
+  <section class="panel" id="panel-cover" hidden>
+    <h1>AIR HOCKEY <span>DUO</span></h1>
+    <p class="big">Ouvre ton iPhone pour jouer</p>
+    <button class="link" id="btn-bypass">Jouer sur cet écran</button>
+  </section>
+
+  <section class="panel" id="panel-menu" hidden>
+    <h1>AIR HOCKEY <span>DUO</span></h1>
+    <p class="tag">Le pli est le filet</p>
+    <button class="primary" data-mode="duel">Duel à deux</button>
+    <div class="row">
+      <button data-mode="solo" data-level="0">Solo facile</button>
+      <button data-mode="solo" data-level="1">Solo moyen</button>
+      <button data-mode="solo" data-level="2">Solo difficile</button>
+    </div>
+    <button id="btn-net">Jouer à distance</button>
+    <div class="row">
+      <button class="link" id="btn-sound">Son activé</button>
+      <button class="link" id="btn-soundtest">Tester le son</button>
+    </div>
+    <p class="hint">Téléphone ouvert à plat, un joueur de chaque côté. Premier à 7.</p>
+    <a class="back" href="../">Tous les jeux</a>
+    <p class="diag" id="diag"></p>
+  </section>
+
+  <section class="panel" id="panel-net" hidden>
+    <h2>Jouer à distance</h2>
+    <div id="net-choice" class="stack">
+      <button class="primary" id="btn-host">Créer une partie</button>
+      <div class="row">
+        <input id="net-code" maxlength="4" placeholder="CODE" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Code de la partie">
+        <button id="btn-join">Rejoindre</button>
+      </div>
+    </div>
+    <div id="net-wait" class="stack" hidden>
+      <p class="hint">Code de la partie</p>
+      <p class="code" id="net-code-show"></p>
+      <button class="primary" id="btn-share">Envoyer le lien</button>
+    </div>
+    <p class="hint" id="net-status"></p>
+    <button id="btn-net-cancel">Retour</button>
+  </section>
+
+  <section class="panel" id="panel-pause" hidden>
+    <h2>Pause</h2>
+    <button class="primary" id="btn-resume">Reprendre</button>
+    <button id="btn-quit">Menu</button>
+  </section>
+
+  <section class="panel" id="panel-over" hidden>
+    <h2 id="over-title"></h2>
+    <p class="big" id="over-score"></p>
+    <button class="primary" id="btn-again">Rejouer</button>
+    <button id="btn-menu">Menu</button>
+  </section>
+
+  <section class="panel" id="panel-error" hidden>
+    <h2>Affichage indisponible</h2>
+    <p id="error-text">Ce navigateur ne prend pas en charge WebGL2, nécessaire au jeu.</p>
+  </section>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

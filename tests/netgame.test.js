@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createGame, update } from '../src/game.js';
-import { setTarget } from '../src/physics.js';
-import { aiTarget, createAiState } from '../src/ai.js';
-import { netStart, netOutgoing, netIncoming } from '../src/netgame.js';
+import { createGame, update } from '../air-hockey/src/game.js';
+import { setTarget } from '../air-hockey/src/physics.js';
+import { aiTarget, createAiState } from '../air-hockey/src/ai.js';
+import { netStart, netOutgoing, netIncoming } from '../air-hockey/src/netgame.js';
 
 // Deux téléphones simulés reliés par un canal fiable et ordonné avec du retard.
 // Chaque joueur est tenu par l'IA, dans son propre repère (il se voit joueur 0).

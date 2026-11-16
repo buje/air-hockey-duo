@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { classify, computeLayout, screenToTable, tableToScreen } from '../src/display.js';
+import { classify, computeLayout, screenToTable, tableToScreen } from '../air-hockey/src/display.js';
 
 test('classement des écrans', () => {
   assert.equal(classify(466, 678), 'cover');
