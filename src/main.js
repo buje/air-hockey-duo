@@ -5,6 +5,8 @@ import { computeLayout, tableToScreen } from './display.js';
 import { createGame, startMatch, update, pause, resume, setAspect } from './game.js';
 import { createRenderer } from './renderer.js';
 import { attachInput } from './input.js';
+import * as sound from './audio.js';
+import { buzz, hapticsSupported } from './haptics.js';
 
 const $ = (id) => document.getElementById(id);
 const canvas = $('gl');
@@ -103,7 +105,7 @@ function placeHud() {
 function updateDiag() {
   const posture = navigator.devicePosture?.type ?? 'n/d';
   $('diag').textContent =
-    `Mis à jour le ${BUILD} · ${layout.vw}×${layout.vh} @${window.devicePixelRatio}x · ${layout.mode} · posture ${posture}`;
+    `Mis à jour le ${BUILD} · ${layout.vw}×${layout.vh} @${window.devicePixelRatio}x · ${layout.mode} · posture ${posture} · vibration ${hapticsSupported ? 'oui' : 'non'}`;
 }
 
 function onResize() {
@@ -157,6 +159,21 @@ panels.menu.addEventListener('click', (e) => {
   const btn = e.target.closest('button[data-mode]');
   if (btn) beginMatch(btn.dataset.mode, Number(btn.dataset.level ?? 1));
 });
+// Le son ne peut démarrer qu'après un geste : on le débloque au premier toucher.
+for (const type of ['pointerdown', 'click', 'touchend']) {
+  document.addEventListener(type, () => sound.unlock(), { capture: true });
+}
+document.addEventListener('click', (e) => {
+  if (e.target.closest('button')) sound.play({ type: 'ui' }, 1);
+});
+function updateSoundButton() {
+  $('btn-sound').textContent = sound.isEnabled() ? 'Son activé' : 'Son coupé';
+}
+$('btn-sound').addEventListener('click', () => {
+  sound.setEnabled(!sound.isEnabled());
+  updateSoundButton();
+});
+updateSoundButton();
 $('btn-bypass').addEventListener('click', () => {
   coverBypass = true;
   goMenu();
@@ -189,7 +206,9 @@ function showOver() {
 function handleEvents(events) {
   for (const ev of events) {
     renderer.onEvent(ev, game);
-    if (!inMatch()) continue;
+    if (!inMatch()) continue; // la démo derrière le menu reste silencieuse
+    sound.play(ev, game.world.W);
+    buzz(ev);
     if (ev.type === 'score') updateScores(ev.scorer);
     if (ev.type === 'win') overTimer = 1.4;
   }
@@ -232,4 +251,4 @@ if (!renderer) {
 }
 
 // Accès pour les tests automatiques et le diagnostic depuis la console.
-window.__airhockey = { game, getLayout: () => layout, beginMatch };
+window.__airhockey = { game, getLayout: () => layout, beginMatch, audioState: sound.audioState };

@@ -38,6 +38,7 @@ with sync_playwright() as p:
     # Duel : deux doigts, un par camp.
     page.click("button[data-mode=duel]")
     page.wait_for_timeout(300)
+    assert page.evaluate("() => __airhockey.audioState()") == "running", "le son doit démarrer au premier geste"
     page.evaluate("""() => {
       const c = document.getElementById('gl');
       const ev = (type, id, x, y) => c.dispatchEvent(new PointerEvent(type, {pointerId: id, clientX: x, clientY: y, pointerType: 'touch', bubbles: true}));

@@ -24,5 +24,7 @@ Air hockey web pour iPhone Duo ouvert à plat : le pli de l'écran est le filet.
 
 ## À savoir
 
+- Sons : `src/audio.js`, synthétisés avec Web Audio, déclenchés par les événements du jeu. La démo derrière le menu est muette.
+- Vibrations : impossibles en web sur iPhone (Safari n'a pas `navigator.vibrate` et l'astuce de l'interrupteur a été corrigée par Apple dans iOS 26.5). `src/haptics.js` ne sert qu'aux navigateurs Android. Le vrai retour haptique demande une app native.
 - Safari n'expose le pli que derrière des feature flags : le jeu déduit fermé ou ouvert de la taille de fenêtre (`classify` dans `display.js`).
 - Le ressenti (tactile, gestes système, chauffe, fluidité) ne se juge que sur l'appareil de Thomas. Lui demander ses retours plutôt que deviner.
